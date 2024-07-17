@@ -1,4 +1,4 @@
-FROM ollama/ollama
+FROM ollama/ollama:latest
 
 COPY ./setup-ollama.sh /tmp/setup-ollama.sh
 
@@ -26,7 +26,7 @@ RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
 COPY ./app /app
-COPY ./data /data
+VOLUME [ "./data:/data", "./chroma_data:/chroma_data" ]
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers

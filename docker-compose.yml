@@ -29,14 +29,14 @@ services:
   headfittedchat:
     image: proinators/headfittedchat:0.1
     volumes:
-      -./data:/data
-      -./chroma_data/:/chroma_data
+      - ./data:/data
+      - ./chroma_data/:/chroma_data
     build:
       context: .
       dockerfile: ./Dockerfile
     environment:
       - ISINDOCKER=1
-      - URL="http://example.com"
+      - URL="http://headfitted.in"
     depends_on:
       - ollama-container
     networks:
