@@ -16,7 +16,7 @@ To build a container using Docker, then run the Compose config, you can follow t
 
 Once the image is built, you can use Docker Compose to start the container:
 ```
-docker-compose up
+docker compose up
 ```
 
 This command will start the container based on the configuration specified in the `docker-compose.yml` file.
