@@ -1,0 +1,9 @@
+venv/
+.vscode/
+data/
+chroma_data/
+ollama/
+old/
+.dockerignore
+__pycache__/
+app/__pycache__/

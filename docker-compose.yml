@@ -1,0 +1,49 @@
+version: '3.4'
+
+services:
+  ollama-container:
+    hostname: ollama-container
+    volumes:
+      - ./ollama/ollama:/root/.ollama
+    container_name: ollama-container
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:latest
+    ports:
+      - 11434:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - OLLAMA_DEBUG=1
+      - OLLAMA_KEEP_ALIVE=24h
+    networks:
+      - ollama-docker
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+  headfittedchat:
+    image: proinators/headfittedchat:0.1
+    volumes:
+      -./data:/data
+      -./chroma_data/:/chroma_data
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - ISINDOCKER=1
+      - URL="http://example.com"
+    depends_on:
+      - ollama-container
+    networks:
+      - ollama-docker
+    ports:
+      - 8000:8000
+
+networks:
+  ollama-docker:
+    external: false
